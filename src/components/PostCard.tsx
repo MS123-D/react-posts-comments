@@ -6,18 +6,21 @@ import {
   Box,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import type { Post } from "../types";
 
 interface PostCardProps {
   post: Post;
   onClick: () => void;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
 function PostCard({
   post,
   onClick,
   onEdit,
+  onDelete,
 }: PostCardProps) {
   return (
     <Card
@@ -41,29 +44,54 @@ function PostCard({
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
-            mb: 1,
+            alignItems: "flex-start",
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: 600, color: "#3b2867" }}>
-            {post.title}
-          </Typography>
+          {/* Left Side */}
+          <Box sx={{ flex: 1, mr: 2 }}>
+            <Typography variant="h6">
+              {post.title}
+            </Typography>
 
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              onEdit();
+            <Typography
+              variant="body2"
+              sx={{ mt: 1 }}
+            >
+              {post.body}
+            </Typography>
+          </Box>
+
+          {/* Right Side */}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 0.5,
             }}
-            size="small"
-            sx={{ color: "#3b2867" }}
           >
-            <EditIcon fontSize="small" />
-          </IconButton>
-        </Box>
+            <IconButton
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit();
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
 
-        <Typography variant="body2" color="text.secondary">
-          {post.body}
-        </Typography>
+            <IconButton
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+            >
+              <DeleteIcon
+                fontSize="small"
+                color="error"
+              />
+            </IconButton>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

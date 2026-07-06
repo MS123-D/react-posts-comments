@@ -51,6 +51,13 @@ function App() {
     setOpenPostForm(false);
   };
 
+  const handleDeletePost = (id: number) => {
+    const updatedPosts = postList.filter(
+      (post) => post.id !== id
+    );
+    setPostList(updatedPosts);
+  };
+
   const handleSaveComment = (comment: PostComment) => {
     const exists = commentList.find((c) => c.id === comment.id);
     if (exists) {
@@ -143,6 +150,7 @@ function App() {
                 setEditingPost(post);
                 setOpenPostForm(true);
               }}
+              onDelete={() => handleDeletePost(post.id)}
             />
           ))}
         </Box>
